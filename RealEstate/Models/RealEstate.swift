@@ -223,11 +223,11 @@ struct RealEstate: Codable, Equatable, Identifiable {
 
     var location: CLLocationCoordinate2D = .init(latitude: 0.0, longitude: 0.0)
 
-    var saleCategory          : SaleCategory = .rent
+    var saleCategory           : SaleCategory = .rent
     var city                  : City = .arrass
     var type                  : RealEstateType = .apartment
     var offer                 : OfferType      = .yearly
-    var isAvailable           : Bool = true
+    var isAvailable            : Bool = true
     var price                 : Int = 0
     var videoUrlString         : String = ""
 }

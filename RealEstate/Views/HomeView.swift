@@ -19,14 +19,16 @@ struct MyStore {
 struct HomeView: View {
 
     @EnvironmentObject var firebaseUserManager: FirebaseUserManager
-    @State private var isShowingProfileView = false
-    @State private var isShowingAuthView = false
     @State private var popupBGColor = Color(#colorLiteral(red: 0.1333310306, green: 0.141177088, blue: 0.1607830822, alpha: 1))
     @State private var myRealEstates: [RealEstate] = [
         .init(location: .init(latitude: 25.874972, longitude: 43.496640)),
         .init(location: .init(latitude: 25.867424, longitude: 43.498050))
     ]
     @StateObject var locationManager = LocationManager()
+
+    @State private var isShowingProfileView = false
+    @State private var isShowingAuthView = false
+    @State private var isShowingAddingRealEstateView = false
 
     var body: some View {
 
@@ -197,6 +199,9 @@ struct HomeView: View {
         .fullScreenCover(isPresented: $isShowingProfileView) {
             ProfileView()
         }
+        .fullScreenCover(isPresented: $isShowingAddingRealEstateView) {
+            AddRealEstateView()
+        }
 
         //        VStack {
         //            Text("User id \(firebaseUserManager.user.id)")
@@ -269,7 +274,7 @@ extension HomeView {
             Spacer()
 
             Button {
-
+                isShowingAddingRealEstateView.toggle()
             } label: {
                 Text("Add Real Estate")
             }.padding(.trailing, 12)

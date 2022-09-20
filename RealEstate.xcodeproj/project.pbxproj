@@ -13,7 +13,10 @@
 		0C49AD6D28D34CA30014A468 /* RealEstateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C49AD6C28D34CA30014A468 /* RealEstateDetailView.swift */; };
 		0C57FABB28D1D222001387D6 /* UpdateUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57FABA28D1D222001387D6 /* UpdateUsernameView.swift */; };
 		0C57FABD28D1DE24001387D6 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57FABC28D1DE24001387D6 /* Extension+Date.swift */; };
+		0C62B7E828D4918B0090CD1D /* AddRealEstateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C62B7E728D4918B0090CD1D /* AddRealEstateView.swift */; };
 		0CA217C728C8CCBC005BF4D8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA217C628C8CCBC005BF4D8 /* HomeView.swift */; };
+		0CB013AD28D9A8DC007165F4 /* MapUIKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB013AC28D9A8DC007165F4 /* MapUIKitView.swift */; };
+		0CB013AF28D9B059007165F4 /* SampleRealEstate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB013AE28D9B059007165F4 /* SampleRealEstate.swift */; };
 		0CC463E628C7380A004A08A8 /* RealEstateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC463E528C7380A004A08A8 /* RealEstateApp.swift */; };
 		0CC463ED28C7380D004A08A8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CC463EC28C7380D004A08A8 /* Preview Assets.xcassets */; };
 		0CC463F828C7382C004A08A8 /* MediaPicker-PhotosUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC463F428C7382C004A08A8 /* MediaPicker-PhotosUI.swift */; };
@@ -42,7 +45,10 @@
 		0C49AD6C28D34CA30014A468 /* RealEstateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealEstateDetailView.swift; sourceTree = "<group>"; };
 		0C57FABA28D1D222001387D6 /* UpdateUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameView.swift; sourceTree = "<group>"; };
 		0C57FABC28D1DE24001387D6 /* Extension+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
+		0C62B7E728D4918B0090CD1D /* AddRealEstateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRealEstateView.swift; sourceTree = "<group>"; };
 		0CA217C628C8CCBC005BF4D8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0CB013AC28D9A8DC007165F4 /* MapUIKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUIKitView.swift; sourceTree = "<group>"; };
+		0CB013AE28D9B059007165F4 /* SampleRealEstate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleRealEstate.swift; sourceTree = "<group>"; };
 		0CC463E228C7380A004A08A8 /* RealEstate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealEstate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC463E528C7380A004A08A8 /* RealEstateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealEstateApp.swift; sourceTree = "<group>"; };
 		0CC463EC28C7380D004A08A8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -92,24 +98,26 @@
 			path = FirebaseManager;
 			sourceTree = "<group>";
 		};
-		0C49AD6E28D3694B0014A468 /* SubViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SubViews;
-			sourceTree = "<group>";
-		};
 		0CA217C528C8CC85005BF4D8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0C49AD6E28D3694B0014A468 /* SubViews */,
 				0CC463FE28C73897004A08A8 /* AuthView.swift */,
 				0CA217C628C8CCBC005BF4D8 /* HomeView.swift */,
 				0C1202DD28D07B4F00BE60CA /* ProfileView.swift */,
 				0C57FABA28D1D222001387D6 /* UpdateUsernameView.swift */,
 				0C49AD6C28D34CA30014A468 /* RealEstateDetailView.swift */,
+				0C62B7E728D4918B0090CD1D /* AddRealEstateView.swift */,
+				0CB013AE28D9B059007165F4 /* SampleRealEstate.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		0CB013A928D9A884007165F4 /* MapUIKitView */ = {
+			isa = PBXGroup;
+			children = (
+				0CB013AC28D9A8DC007165F4 /* MapUIKitView.swift */,
+			);
+			path = MapUIKitView;
 			sourceTree = "<group>";
 		};
 		0CC463D928C7380A004A08A8 = {
@@ -165,6 +173,7 @@
 		0CC4640028C744A1004A08A8 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0CB013A928D9A884007165F4 /* MapUIKitView */,
 				0C101C3228D464D8004C9D05 /* FirebaseManager */,
 				0C101C3128D464CB004C9D05 /* LocationManager */,
 				0C57FABC28D1DE24001387D6 /* Extension+Date.swift */,
@@ -267,9 +276,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0CB013AD28D9A8DC007165F4 /* MapUIKitView.swift in Sources */,
 				0CC463FF28C73897004A08A8 /* AuthView.swift in Sources */,
 				0C101C3028D464C5004C9D05 /* LocationManager.swift in Sources */,
+				0C62B7E828D4918B0090CD1D /* AddRealEstateView.swift in Sources */,
 				0CC463F828C7382C004A08A8 /* MediaPicker-PhotosUI.swift in Sources */,
+				0CB013AF28D9B059007165F4 /* SampleRealEstate.swift in Sources */,
 				0C49AD6B28D332A30014A468 /* Shapes.swift in Sources */,
 				0C57FABB28D1D222001387D6 /* UpdateUsernameView.swift in Sources */,
 				0CC463F928C7382C004A08A8 /* MediaPicker-iOS.swift in Sources */,
@@ -415,6 +427,7 @@
 				DEVELOPMENT_TEAM = 2CVQ397APV;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We would like to access your location";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We would like to access your location";
@@ -450,6 +463,7 @@
 				DEVELOPMENT_TEAM = 2CVQ397APV;
 				ENABLE_PREVIEWS = YES;
 				EXCLUDED_ARCHS = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We would like to access your location";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "We would like to access your location";
