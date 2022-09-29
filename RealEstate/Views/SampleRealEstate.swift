@@ -9,15 +9,19 @@ import SwiftUI
 import LoremSwiftum
 import MapKit
 import AVKit
+import SDWebImageSwiftUI
 
 struct SampleRealEstate: View {
     @EnvironmentObject var firebaseUserManager: FirebaseUserManager
+    @EnvironmentObject var firebaseRealEstateManager: FirebaseRealEstateManager
     @State private var phoneBgColor = Color(#colorLiteral(red: 0, green: 0.5647153854, blue: 0.3137319386, alpha: 1))
     @State private var selectedMediaType: MediaType = .Photos
     @Binding var realEstate: RealEstate
     @Binding var coordinateRegion: MKCoordinateRegion
     @Binding var images: [UIImage]
     @Binding var videoUrl: URL?
+    @Binding var isShowingAddingRealEstateView: Bool
+    @State private var isLoading: Bool = false
 
     var body: some View {
         ScrollView {
@@ -48,6 +52,38 @@ struct SampleRealEstate: View {
                     .tabViewStyle(.page(indexDisplayMode: .always))
                     .indexViewStyle(.page(backgroundDisplayMode: .always))
                     .frame(height: 400)
+                    .overlay(
+                        VStack {
+                            HStack {
+                                HStack {
+                                    Image(systemName: "photo")
+                                    Text("\(images.count)")
+                                }.padding(8)
+                                    .background(Material.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                Spacer()
+                                Image(systemName: "bookmark")
+                                    .padding(8)
+                                    .background(Material.ultraThinMaterial)
+                                    .clipShape(Circle())
+                            }
+                            Spacer()
+                            HStack {
+                                HStack {
+                                    Image(systemName: realEstate.saleCategory.imageName)
+                                    Text(realEstate.saleCategory.title)
+                                }.padding(8)
+                                    .background(Material.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                Spacer()
+                                Text("\(realEstate.price)")
+                                    .padding(8)
+                                    .background(Material.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            }
+                        }.padding()
+                            .padding(.bottom, 40)
+                    )
                 } else {
                     Image(systemName: "photo")
                         .resizable()
@@ -124,9 +160,13 @@ struct SampleRealEstate: View {
 
                 HStack {
                     VStack {
-                        Image("people-1")
+                        WebImage(url: URL(string: firebaseUserManager.user.profileImageUrl))
                             .resizable()
-                            .scaledToFit()
+                            .placeholder {
+                                Rectangle().foregroundColor(.gray)
+                            }
+                            .indicator(.activity)
+                            .scaledToFill()
                             .frame(width: 50, height: 50, alignment: .center)
                             .clipShape(Circle())
                             .padding(2)
@@ -135,7 +175,7 @@ struct SampleRealEstate: View {
                                     .stroke(Color.white, lineWidth: 0.5)
                             }
 
-                        Text(Lorem.firstName)
+                        Text(firebaseUserManager.user.username)
                     }
 
                     VStack(alignment: .leading) {
@@ -145,7 +185,7 @@ struct SampleRealEstate: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "envelope")
-                                    Text("Email")
+                                    Text(firebaseUserManager.user.email)
                                 }
                                 .foregroundColor(.white)
                                 .frame(width: 155, height: 34)
@@ -172,7 +212,7 @@ struct SampleRealEstate: View {
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "phone")
-                                Text("46704090609")
+                                Text(firebaseUserManager.user.phoneNumber)
                             }
                             .foregroundColor(.white)
                             .frame(width: 320, height: 34)
@@ -192,7 +232,44 @@ struct SampleRealEstate: View {
                     }
                     Divider()
                 }
+            }.padding(.horizontal, 4)
+                .padding(.top, 8)
+
+            Button {
+                isLoading.toggle()
+                guard let videoUrl = videoUrl else { return }
+                realEstate.ownerId = firebaseUserManager.user.id
+                firebaseRealEstateManager.addRealEstate(
+                    realEstate: realEstate,
+                    images: images,
+                    videoUrl: videoUrl) { isSuccess in
+                        isLoading.toggle()
+                        if isSuccess {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                self.isShowingAddingRealEstateView = false
+                            }
+                        }
+                    }
+            } label: {
+                Text("Uplaod my Real Estate")
+                    .foregroundColor(.white)
+                    .frame(width: 280, height: 48)
+                    .background(Color.blue.cornerRadius(8))
             }
+        }
+        .overlay {
+            ZStack {
+                Color.black.opacity(0.5)
+                    .ignoresSafeArea()
+                VStack(spacing: 20) {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(.white)
+                        .scaleEffect(2)
+
+                    Text("Please Wait ...")
+                }
+            }.isHidden(!isLoading, remove: !isLoading)
         }
         .navigationTitle("Title")
     }
@@ -206,8 +283,10 @@ struct SampleRealEstate_Previews: PreviewProvider {
                 center: realEstateSample.location,
                 span: realEstateSample.city.zoomLevel)),
             images: .constant([UIImage(named: "Image 1")!, UIImage(named: "Image 2")!, UIImage(named: "Image 3")!, UIImage(named: "Image 4")!, UIImage(named: "Image 5")!, UIImage(named: "Image 6")!,]),
-            videoUrl: .constant(nil)
+            videoUrl: .constant(nil),
+            isShowingAddingRealEstateView: .constant(false)
         ).preferredColorScheme(.dark)
             .environmentObject(FirebaseUserManager())
+            .environmentObject(FirebaseRealEstateManager())
     }
 }

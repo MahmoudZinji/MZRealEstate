@@ -151,7 +151,7 @@ extension ProfileView {
 
     private var myRealEstate: some View {
         NavigationLink {
-
+            MyRealEstateView()
         } label: {
             HStack(spacing: 10) {
                 Image(systemName: "building")

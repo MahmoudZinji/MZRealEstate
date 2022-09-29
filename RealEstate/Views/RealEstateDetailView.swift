@@ -9,6 +9,7 @@ import SwiftUI
 import LoremSwiftum
 import MapKit
 import AVKit
+import SDWebImageSwiftUI
 
 enum MediaType: String, CaseIterable {
     case Photos
@@ -27,10 +28,13 @@ enum MediaType: String, CaseIterable {
 struct RealEstateDetailView: View {
 
     @State private var phoneBgColor = Color(#colorLiteral(red: 0, green: 0.5647153854, blue: 0.3137319386, alpha: 1))
+    @State private var userOwner = User()
+
     @EnvironmentObject var firebaseUserManager: FirebaseUserManager
+    @EnvironmentObject var firebaseRealEstateManager: FirebaseRealEstateManager
     @Binding var realEstate: RealEstate
     @State private var selectedMediaType: MediaType = .Photos
-    @Binding var coordinateRegion: MKCoordinateRegion
+    @State var coordinateRegion: MKCoordinateRegion = .init()
     @State var dayTimeSelection: [DayTimeSelection] = [
         .init(day: .monday, fromTime: Date(), toTime: Date()),
         .init(day: .tuesday, fromTime: Date(), toTime: Date()),
@@ -38,6 +42,9 @@ struct RealEstateDetailView: View {
         .init(day: .thursday, fromTime: Date(), toTime: Date()),
         .init(day: .friday, fromTime: Date(), toTime: Date())
     ]
+    var isBookmarked: Bool {
+        firebaseRealEstateManager.bookmarkedRealEstates.contains(where: {$0.id == realEstate.id })
+    }
 
     var body: some View {
         ScrollView {
@@ -53,24 +60,100 @@ struct RealEstateDetailView: View {
 
             switch selectedMediaType {
             case .Photos:
-                TabView {
-                    ForEach(realEstate.images, id: \.self) { imageName in
-                        Image(imageName)
+                VStack {
+                    if !realEstate.images.isEmpty {
+                        TabView {
+                            ForEach(realEstate.images, id: \.self) { imageUrlString in
+                                if let url = URL(string: imageUrlString) {
+                                    WebImage(url: url)
+                                        .resizable()
+                                        .placeholder {
+                                            Rectangle().foregroundColor(.gray)
+                                        }
+                                        .indicator(.activity)
+                                        .transition(.fade(duration: 0.5))
+                                        .scaledToFit()
+                                        .frame(width: UIScreen.main.bounds.width - 20,
+                                               height: 340)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .offset(y: -20)
+                                } else {
+                                    Image(systemName: "photo")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 100, height: 100)
+                                        .opacity(0.4)
+                                        .padding(.vertical, 18)
+                                }
+                            }
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .always))
+                        .indexViewStyle(.page(backgroundDisplayMode: .always))
+                        .frame(height: 400)
+                        .overlay(
+                            VStack {
+                                HStack {
+                                    HStack {
+                                        Image(systemName: "photo")
+                                        Text("\(realEstate.images.count)")
+                                    }.padding(8)
+                                        .background(Material.ultraThinMaterial)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    Spacer()
+                                    Button {
+                                        if isBookmarked {
+                                            firebaseRealEstateManager.removeRealEstateFromBookmarks(realEstate: realEstate)
+                                        } else {
+                                            firebaseRealEstateManager.bookmarkRealEstate(realEstate: realEstate, userId: firebaseUserManager.user.id)
+                                        }
+                                    } label: {
+                                        Image(systemName: isBookmarked ? "bookmark.fill" :"bookmark")
+                                            .foregroundColor(.yellow)
+                                            .padding(8)
+                                            .background(Material.ultraThinMaterial)
+                                            .clipShape(Circle())
+                                    }
+                                }
+                                Spacer()
+                                HStack {
+                                    HStack {
+                                        Image(systemName: realEstate.saleCategory.imageName)
+                                        Text(realEstate.saleCategory.title)
+                                    }.padding(8)
+                                        .background(Material.ultraThinMaterial)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    Spacer()
+                                    Text("\(realEstate.price)")
+                                        .padding(8)
+                                        .background(Material.ultraThinMaterial)
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                }
+                            }.padding()
+                                .padding(.bottom, 40)
+                        )
+                    } else {
+                        Image(systemName: "photo")
                             .resizable()
                             .scaledToFill()
-                            .frame(width: UIScreen.main.bounds.width - 20,
-                                   height: 340)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .offset(y: -20)
+                            .frame(width: 100, height: 100)
+                            .opacity(0.4)
+                            .padding(.vertical, 18)
                     }
                 }
-                .tabViewStyle(.page(indexDisplayMode: .always))
-                .indexViewStyle(.page(backgroundDisplayMode: .always))
-                .frame(height: 400)
             case .Videos:
-                VideoPlayer(player: AVPlayer(url: URL(string: realEstate.videoUrlString)!))
-                    .frame(width: UIScreen.main.bounds.width - 20,
-                           height: 340)
+                VStack {
+                    if realEstate.videoUrlString != "" {
+                        VideoPlayer(player: AVPlayer(url: URL(string: realEstate.videoUrlString)!))
+                            .frame(width: UIScreen.main.bounds.width - 20,
+                                   height: 340)
+                    } else {
+                        Image(systemName: "play.slash")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 100, height: 100)
+                            .padding(.vertical, 18)
+                    }
+                }
             }
 
             GroupedView(realEstate: $realEstate)
@@ -127,8 +210,13 @@ struct RealEstateDetailView: View {
 
                 HStack {
                     VStack {
-                        Image("people-1")
+                        WebImage(url: URL(string: userOwner.profileImageUrl))
                             .resizable()
+                            .placeholder {
+                                Rectangle().foregroundColor(.gray)
+                            }
+                            .indicator(.activity)
+                            .transition(.fade(duration: 0.5))
                             .scaledToFit()
                             .frame(width: 50, height: 50, alignment: .center)
                             .clipShape(Circle())
@@ -148,7 +236,7 @@ struct RealEstateDetailView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "envelope")
-                                    Text("Email")
+                                    Text(userOwner.email)
                                 }
                                 .foregroundColor(.white)
                                 .frame(width: 155, height: 34)
@@ -175,7 +263,7 @@ struct RealEstateDetailView: View {
                         } label: {
                             HStack(spacing: 4) {
                                 Image(systemName: "phone")
-                                Text("46704090609")
+                                Text(userOwner.phoneNumber)
                             }
                             .foregroundColor(.white)
                             .frame(width: 320, height: 34)
@@ -185,7 +273,7 @@ struct RealEstateDetailView: View {
                     }.padding(.leading, 6)
                 }
 
-                ForEach(dayTimeSelection, id: \.self) { dayTimeSelection in
+                ForEach(userOwner.dayTimeAvailability, id: \.self) { dayTimeSelection in
                     HStack {
                         Text(dayTimeSelection.day.title)
                         Spacer()
@@ -197,6 +285,13 @@ struct RealEstateDetailView: View {
                 }
             }
         }
+        .onAppear {
+            coordinateRegion.center = realEstate.location
+            coordinateRegion.span = realEstate.city.extraZoomLevel
+            firebaseRealEstateManager.fetchOwnerDetails(userId: realEstate.ownerId) { ownerUser in
+                self.userOwner = ownerUser
+            }
+        }
         .navigationTitle("Title")
     }
 }
@@ -204,12 +299,10 @@ struct RealEstateDetailView: View {
 struct RealEstateDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            RealEstateDetailView(
-                realEstate: .constant(realEstateSample),
-                coordinateRegion: .constant(.init(center: City.arrass.coordinate,
-                                                span: City.arrass.extraZoomLevel)))
+            RealEstateDetailView(realEstate: .constant(realEstateSample))
         }
         .environmentObject(FirebaseUserManager())
+        .environmentObject(FirebaseRealEstateManager())
         .preferredColorScheme(.dark)
     }
 }

@@ -10,6 +10,7 @@ import PhotosUI
 import AVKit
 import MapKit
 import LoremSwiftum
+import SDWebImageSwiftUI
 
 class AddRealEstateViewModel: ObservableObject {
     @Published var realEstate = RealEstate()
@@ -26,6 +27,7 @@ struct AddRealEstateView: View {
 
     @State private var phoneBgColor = Color(#colorLiteral(red: 0, green: 0.5647153854, blue: 0.3137319386, alpha: 1))
     @StateObject var viewModel = AddRealEstateViewModel()
+    @EnvironmentObject var firebaseUserManager: FirebaseUserManager
     @Environment(\.presentationMode) private var presentationMode
     @State var dayTimeSelection: [DayTimeSelection] = [
         .init(day: .monday, fromTime: Date(), toTime: Date()),
@@ -34,6 +36,7 @@ struct AddRealEstateView: View {
         .init(day: .thursday, fromTime: Date(), toTime: Date()),
         .init(day: .friday, fromTime: Date(), toTime: Date())
     ]
+    @Binding var isShowingAddingRealEstateView: Bool
 
     var body: some View {
         NavigationView {
@@ -491,13 +494,17 @@ struct AddRealEstateView: View {
 
                     Divider()
 
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 12) {
 
                         HStack {
                             VStack {
-                                Image("people-1")
+                                WebImage(url: URL(string: firebaseUserManager.user.profileImageUrl))
                                     .resizable()
-                                    .scaledToFit()
+                                    .placeholder {
+                                        Rectangle().foregroundColor(.gray)
+                                    }
+                                    .indicator(.activity)
+                                    .scaledToFill()
                                     .frame(width: 50, height: 50, alignment: .center)
                                     .clipShape(Circle())
                                     .padding(2)
@@ -506,7 +513,7 @@ struct AddRealEstateView: View {
                                             .stroke(Color.white, lineWidth: 0.5)
                                     }
 
-                                Text(Lorem.firstName)
+                                Text(firebaseUserManager.user.username)
                             }
 
                             VStack(alignment: .leading) {
@@ -516,7 +523,7 @@ struct AddRealEstateView: View {
                                     } label: {
                                         HStack {
                                             Image(systemName: "envelope")
-                                            Text("Email")
+                                            Text(firebaseUserManager.user.email)
                                         }
                                         .foregroundColor(.white)
                                         .frame(width: 155, height: 34)
@@ -543,7 +550,7 @@ struct AddRealEstateView: View {
                                 } label: {
                                     HStack(spacing: 4) {
                                         Image(systemName: "phone")
-                                        Text("46704090609")
+                                        Text(firebaseUserManager.user.phoneNumber)
                                     }
                                     .foregroundColor(.white)
                                     .frame(width: 320, height: 34)
@@ -553,7 +560,7 @@ struct AddRealEstateView: View {
                             }.padding(.leading, 6)
                         }
 
-                        ForEach(dayTimeSelection, id: \.self) { dayTimeSelection in
+                        ForEach(firebaseUserManager.user.dayTimeAvailability, id: \.self) { dayTimeSelection in
                             HStack {
                                 Text(dayTimeSelection.day.title)
                                 Spacer()
@@ -571,7 +578,7 @@ struct AddRealEstateView: View {
                     SampleRealEstate(realEstate: $viewModel.realEstate,
                                      coordinateRegion: $viewModel.coordinateRegion,
                                      images: $viewModel.images,
-                                     videoUrl: $viewModel.videoUrl)
+                                     videoUrl: $viewModel.videoUrl, isShowingAddingRealEstateView: $isShowingAddingRealEstateView)
                 } label: {
                     Text("Show Sample Before Upload")
                         .foregroundColor(.white)
@@ -599,7 +606,8 @@ struct AddRealEstateView: View {
 
 struct AddRealEstateView_Previews: PreviewProvider {
     static var previews: some View {
-        AddRealEstateView()
+        AddRealEstateView(isShowingAddingRealEstateView: .constant(false))
+            .environmentObject(FirebaseUserManager())
             .preferredColorScheme(.dark)
     }
 }

@@ -13,10 +13,14 @@
 		0C49AD6D28D34CA30014A468 /* RealEstateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C49AD6C28D34CA30014A468 /* RealEstateDetailView.swift */; };
 		0C57FABB28D1D222001387D6 /* UpdateUsernameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57FABA28D1D222001387D6 /* UpdateUsernameView.swift */; };
 		0C57FABD28D1DE24001387D6 /* Extension+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C57FABC28D1DE24001387D6 /* Extension+Date.swift */; };
+		0C5C7A4828E5A06900663788 /* MapFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C5C7A4728E5A06900663788 /* MapFilterView.swift */; };
 		0C62B7E828D4918B0090CD1D /* AddRealEstateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C62B7E728D4918B0090CD1D /* AddRealEstateView.swift */; };
 		0CA217C728C8CCBC005BF4D8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CA217C628C8CCBC005BF4D8 /* HomeView.swift */; };
 		0CB013AD28D9A8DC007165F4 /* MapUIKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB013AC28D9A8DC007165F4 /* MapUIKitView.swift */; };
 		0CB013AF28D9B059007165F4 /* SampleRealEstate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB013AE28D9B059007165F4 /* SampleRealEstate.swift */; };
+		0CB013B128D9BACD007165F4 /* FirebaseRealEstateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB013B028D9BACD007165F4 /* FirebaseRealEstateManager.swift */; };
+		0CBAFD2328E4494E002D995D /* MyRealEstateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBAFD2228E4494E002D995D /* MyRealEstateView.swift */; };
+		0CBAFD2528E46536002D995D /* BookMarkedRealEstateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CBAFD2428E46536002D995D /* BookMarkedRealEstateView.swift */; };
 		0CC463E628C7380A004A08A8 /* RealEstateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC463E528C7380A004A08A8 /* RealEstateApp.swift */; };
 		0CC463ED28C7380D004A08A8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CC463EC28C7380D004A08A8 /* Preview Assets.xcassets */; };
 		0CC463F828C7382C004A08A8 /* MediaPicker-PhotosUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CC463F428C7382C004A08A8 /* MediaPicker-PhotosUI.swift */; };
@@ -45,10 +49,14 @@
 		0C49AD6C28D34CA30014A468 /* RealEstateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealEstateDetailView.swift; sourceTree = "<group>"; };
 		0C57FABA28D1D222001387D6 /* UpdateUsernameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameView.swift; sourceTree = "<group>"; };
 		0C57FABC28D1DE24001387D6 /* Extension+Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extension+Date.swift"; sourceTree = "<group>"; };
+		0C5C7A4728E5A06900663788 /* MapFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFilterView.swift; sourceTree = "<group>"; };
 		0C62B7E728D4918B0090CD1D /* AddRealEstateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRealEstateView.swift; sourceTree = "<group>"; };
 		0CA217C628C8CCBC005BF4D8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		0CB013AC28D9A8DC007165F4 /* MapUIKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapUIKitView.swift; sourceTree = "<group>"; };
 		0CB013AE28D9B059007165F4 /* SampleRealEstate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleRealEstate.swift; sourceTree = "<group>"; };
+		0CB013B028D9BACD007165F4 /* FirebaseRealEstateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseRealEstateManager.swift; sourceTree = "<group>"; };
+		0CBAFD2228E4494E002D995D /* MyRealEstateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRealEstateView.swift; sourceTree = "<group>"; };
+		0CBAFD2428E46536002D995D /* BookMarkedRealEstateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookMarkedRealEstateView.swift; sourceTree = "<group>"; };
 		0CC463E228C7380A004A08A8 /* RealEstate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealEstate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CC463E528C7380A004A08A8 /* RealEstateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealEstateApp.swift; sourceTree = "<group>"; };
 		0CC463EC28C7380D004A08A8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -94,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				0CC6AF7328C7771000F2250A /* FirebaseUserManager.swift */,
+				0CB013B028D9BACD007165F4 /* FirebaseRealEstateManager.swift */,
 			);
 			path = FirebaseManager;
 			sourceTree = "<group>";
@@ -107,7 +116,10 @@
 				0C57FABA28D1D222001387D6 /* UpdateUsernameView.swift */,
 				0C49AD6C28D34CA30014A468 /* RealEstateDetailView.swift */,
 				0C62B7E728D4918B0090CD1D /* AddRealEstateView.swift */,
+				0C5C7A4728E5A06900663788 /* MapFilterView.swift */,
 				0CB013AE28D9B059007165F4 /* SampleRealEstate.swift */,
+				0CBAFD2228E4494E002D995D /* MyRealEstateView.swift */,
+				0CBAFD2428E46536002D995D /* BookMarkedRealEstateView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -278,14 +290,18 @@
 			files = (
 				0CB013AD28D9A8DC007165F4 /* MapUIKitView.swift in Sources */,
 				0CC463FF28C73897004A08A8 /* AuthView.swift in Sources */,
+				0CBAFD2328E4494E002D995D /* MyRealEstateView.swift in Sources */,
 				0C101C3028D464C5004C9D05 /* LocationManager.swift in Sources */,
 				0C62B7E828D4918B0090CD1D /* AddRealEstateView.swift in Sources */,
 				0CC463F828C7382C004A08A8 /* MediaPicker-PhotosUI.swift in Sources */,
 				0CB013AF28D9B059007165F4 /* SampleRealEstate.swift in Sources */,
 				0C49AD6B28D332A30014A468 /* Shapes.swift in Sources */,
+				0CBAFD2528E46536002D995D /* BookMarkedRealEstateView.swift in Sources */,
 				0C57FABB28D1D222001387D6 /* UpdateUsernameView.swift in Sources */,
+				0CB013B128D9BACD007165F4 /* FirebaseRealEstateManager.swift in Sources */,
 				0CC463F928C7382C004A08A8 /* MediaPicker-iOS.swift in Sources */,
 				0CC4640228C744B0004A08A8 /* Extension+View.swift in Sources */,
+				0C5C7A4828E5A06900663788 /* MapFilterView.swift in Sources */,
 				0C1202DE28D07B4F00BE60CA /* ProfileView.swift in Sources */,
 				0CC463FB28C7382C004A08A8 /* MediaOptions.swift in Sources */,
 				0CA217C728C8CCBC005BF4D8 /* HomeView.swift in Sources */,

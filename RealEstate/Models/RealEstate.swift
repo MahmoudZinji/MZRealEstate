@@ -35,7 +35,7 @@ enum SaleCategory: String, CaseIterable, Codable{
         switch self {
         case .sale:       return "SOLD"
         case .rent:       return "RENTED"
-        case .investment: return "Invseted"
+        case .investment: return "INVESTED"
         }
     }
 
@@ -202,6 +202,7 @@ struct RealEstate: Codable, Equatable, Identifiable {
     }
 
     var id = UUID().uuidString
+    var ownerId: String = ""
     var images: [String] = []
     var description: String = ""
     var beds: Int = 0

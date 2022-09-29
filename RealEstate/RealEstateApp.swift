@@ -13,11 +13,13 @@ struct RealEstateApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var firebaseUserManager = FirebaseUserManager()
+    @StateObject private var firebaseRealEstateManager = FirebaseRealEstateManager()
 
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            MyRealEstateView()
                 .environmentObject(firebaseUserManager)
+                .environmentObject(firebaseRealEstateManager)
         }
     }
 }
